@@ -1,78 +1,58 @@
-* {
-  margin: 0;
-  padding: 0;
+* *::before *::after {
+  box-sizing: border-box;
+  font-family: Gotham Rounded, sans-serif;
+  font-weight: normal;
 }
 
-body{
-	background-color: black;
-	color: white;
-	font-family: "Helvetica Neue",Helvetica,Arial;
-	font-size: 24px;
-	display:flex;
-	flex-direction:column;
-	justify-content:center;
-	align-items:center;
+body {
+	padding: 0;
+	margin: 0;
+	background: linear-gradient(to right, #00AAFF, #00FF6C);
 }
 
-.container{
-	margin-top: 20px;
-	background-color: #3d3d3d;
-	padding: 20px;
-	border-radius:8px;
-}
-
-.results{
-	display:flex;
-	justify-content:flex-start;
-	align-items:center;
-	font-size:48px;
-	margin: 25px 0px ;
-	padding:20px;
-	width: auto;
-	height:100px;
-	color:black;
-	border: 2px solid #18191a;
-	border-radius: 8px;
-	background-color: lightgray;
-}
-
-.number-container {
-  display: flex;
-  flex-wrap: wrap;
-	width: 430px;
+.calculator-grid{
+	display: grid;
 	justify-content: center;
-	gap: 10px;
+	align-content: center;
+	min-height: 100vh;
+	grid-template-columns: repeat(4,100px);
+	grid-template-rows: minmax(120px,auto) repeat(5, 100px);
 }
 
-.number{
-	background-color: #18191a;
-	color: #aaaaaa;
-	width: 98px;
-	height: 98px;
-	border-radius: 50%;
-	display: flex;
-	justify-content:center;
-	align-items:center;
+.calculator-grid > button {
+	cursor: pointer;
+	font-size: 2rem;
+	border: 1px solid white;
+	outline: none;
+	background-color: rgba(255, 255, 255,.75);
 }
 
-.operator{
-	background-color: #FF9212;
-	color:white;
-	width: 98px;
-	height: 98px;
-	border-radius: 50%;
-	display: flex;
-	justify-content:center;
-	align-items:center;
+.calculator-grid > button:hover{
+	background-color: rgba(255, 255, 255,.9);
 }
 
-.equal{
-	background-color: #FF9212;
-	color:white;
-	width: 98px;
-	height: 98px;
-	border-radius: 50%;
+.span-two {
+	grid-column: span 2;
+}
+
+.output{
+	grid-column: 1/-1;
+	background-color: rgba(0, 0, 0, .75);
 	display: flex;
-	justify-content:center;
-	align-items:center;
+	flex-direction: column;
+	align-items: flex-end;
+	justify-content: space-around;
+	padding: 10px;
+	word-wrap: break-word;
+	word-break: break-all;
+}
+
+.output .previous-output{
+	color: rgba(255, 255, 255,.75);
+	font-size: 1.5rem;
+}
+
+.output .current-output{
+	color: rgba(255, 255, 255,.9);
+	font-size: 2.5rem;
 }
