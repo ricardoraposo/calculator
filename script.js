@@ -1,115 +1,98 @@
-"use strict";
+let currentNumber = "";
+let previousNumber = "";
+let operator = undefined;
 
-class Calculator {
-  constructor(previousOperandTextElement, currentOperandTextElement) {
-    this.previousOperandTextElement = previousOperandTextElement;
-    this.currentOperandTextElement = currentOperandTextElement;
-    this.clear();
-  }
+function clear() {
+  currentNumber = "";
+  previousNumber = "";
+  operator = undefined;
+}
+function appendNumber(number) {
+  currentNumber = currentNumber.toString() + number.toString();
+}
 
-  clear() {
-    this.previousOperand = "";
-    this.currentOperand = "";
-    this.operation = undefined;
-  }
+function deleteLastNumber(){
+	currentNumber = currentNumber.slice(0,-1)
+}
 
-  delete() {
-    this.currentOperand = this.currentOperand.toString().slice(0, -1);
-  }
-
-  appendNumber(number) {
-    if (number === "." && this.currentOperand.includes(".")) return;
-    this.currentOperand = this.currentOperand.toString() + number.toString();
-  }
-
-  chooseOperation(operation) {
-    if (this.currentOperand === "") return;
-    if (this.previousOperand !== "") {
-      this.compute();
-    }
-    this.operation = operation;
-    this.previousOperand = this.currentOperand;
-    this.currentOperand = "";
-  }
-
-  compute() {
-    let computation;
-    const prev = parseFloat(this.previousOperand);
-    const current = parseFloat(this.currentOperand);
-    if (isNaN(prev) || isNaN(current)) return;
-    switch (this.operation) {
-      case "+":
-        computation = prev + current;
-        break;
-      case "-":
-        computation = prev - current;
-        break;
-      case "*":
-        computation = prev * current;
-        break;
-      case "÷":
-        computation = prev / current;
-        break;
-      default:
-        return;
-    }
-    this.currentOperand = computation;
-    this.operation = undefined;
-    this.previousOperand = "";
-  }
-
-  updateDisplay() {
-    this.currentOperandTextElement.innerText = this.currentOperand;
-    if (this.operation != undefined) {
-      this.previousOperandTextElement.innerText = `${this.previousOperand} ${this.operation}`;
-		} else{
-			this.previousOperandTextElement.innerText = ""
-		}
+function updateDisplay() {
+  currentNumberTextContent.innerText = currentNumber;
+  if (operator != null) {
+    previousNumberTextContent.innerText = `${previousNumber} ${operator}`;
+  } else {
+    previousNumberTextContent.innerText = "";
   }
 }
 
+function chooseOperation(operation) {
+  if (currentNumber == "") return;
+  if (previousNumber != "") {
+    operate();
+  }
+  operator = operation;
+  previousNumber = currentNumber;
+  currentNumber = "";
+}
+
+function operate() {
+  let result;
+  const prev = parseFloat(previousNumber);
+  const current = parseFloat(currentNumber);
+  if (isNaN(prev) || isNaN(current)) return;
+  if (operator === "+") {
+    result = prev + current;
+  } else if (operator === "-") {
+    result = prev - current;
+  } else if (operator === "*") {
+    result = prev * current;
+  } else if (operator === "÷") {
+    result = prev / current;
+  } else {
+    return;
+  }
+
+  currentNumber = result;
+  operator = undefined;
+  previousNumber = "";
+}
+
 const numberButtons = document.querySelectorAll("[data-number]");
-const operationButtons = document.querySelectorAll("[data-operation]");
-const equalsButton = document.querySelector("[data-equals]");
+const operatorButtons = document.querySelectorAll("[data-operator]");
+const equalButton = document.querySelector("[data-equals]");
 const deleteButton = document.querySelector("[data-delete]");
 const allClearButton = document.querySelector("[data-all-clear]");
-const previousOperandTextElement = document.querySelector(
-  "[data-previous-operand]"
+const previousNumberTextContent = document.querySelector(
+  "[data-previous-number]"
 );
-const currentOperandTextElement = document.querySelector(
-  "[data-current-operand]"
-);
-
-const calculator = new Calculator(
-  previousOperandTextElement,
-  currentOperandTextElement
+const currentNumberTextContent = document.querySelector(
+  "[data-current-number]"
 );
 
 numberButtons.forEach((button) =>
   button.addEventListener("click", () => {
-    calculator.appendNumber(button.innerText);
-    calculator.updateDisplay();
+    appendNumber(button.innerText);
+    updateDisplay();
   })
 );
 
-operationButtons.forEach((button) =>
+operatorButtons.forEach((button) =>
   button.addEventListener("click", () => {
-    calculator.chooseOperation(button.innerText);
-    calculator.updateDisplay();
+    chooseOperation(button.innerText);
+    updateDisplay();
   })
 );
 
-equalsButton.addEventListener("click", () => {
-  calculator.compute();
-  calculator.updateDisplay();
+equalButton.addEventListener("click", () => {
+  operate();
+  updateDisplay();
 });
 
 allClearButton.addEventListener("click", () => {
-  calculator.clear();
-  calculator.updateDisplay();
+  clear();
+  updateDisplay();
 });
 
 deleteButton.addEventListener("click", () => {
-  calculator.delete();
-  calculator.updateDisplay();
+	deleteLastNumber()
+  updateDisplay();
 });

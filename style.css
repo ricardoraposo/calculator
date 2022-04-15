@@ -1,58 +1,56 @@
-* *::before *::after {
+* {
   box-sizing: border-box;
-  font-family: Gotham Rounded, sans-serif;
-  font-weight: normal;
+	font-family: Gotham Rounded, sans-serif;
+	font-weight: normal;
 }
 
-body {
-	padding: 0;
+body{
 	margin: 0;
-	background: linear-gradient(to right, #00AAFF, #00FF6C);
+	padding: 0;
+	background: linear-gradient(to right, #000000, #ff0000);
 }
 
-.calculator-grid{
+.calc-container{
 	display: grid;
 	justify-content: center;
 	align-content: center;
 	min-height: 100vh;
 	grid-template-columns: repeat(4,100px);
-	grid-template-rows: minmax(120px,auto) repeat(5, 100px);
+	grid-template-rows: minmax(120px,auto) repeat(5, 100px)
 }
 
-.calculator-grid > button {
+.calc-container > button {
 	cursor: pointer;
 	font-size: 2rem;
-	border: 1px solid white;
-	outline: none;
-	background-color: rgba(255, 255, 255,.75);
+	background-color: rgba(255,255,255,0.75);
+	border: 1px white solid;
 }
 
-.calculator-grid > button:hover{
-	background-color: rgba(255, 255, 255,.9);
+.calc-container > button:hover {
+	background-color: rgba(255,255,255,0.9);
 }
 
-.span-two {
+.span-two{
 	grid-column: span 2;
 }
 
-.output{
+.display-container{
 	grid-column: 1/-1;
-	background-color: rgba(0, 0, 0, .75);
 	display: flex;
 	flex-direction: column;
-	align-items: flex-end;
 	justify-content: space-around;
+	align-items: flex-end;
 	padding: 10px;
 	word-wrap: break-word;
 	word-break: break-all;
 }
 
-.output .previous-output{
-	color: rgba(255, 255, 255,.75);
+.previous-number{
 	font-size: 1.5rem;
+	color: rgba(255,255,255,0.75);
 }
 
-.output .current-output{
-	color: rgba(255, 255, 255,.9);
+.current-number{
 	font-size: 2.5rem;
+	color: rgba(255, 255, 255, 0.9);
 }
